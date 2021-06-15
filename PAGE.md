@@ -7,3 +7,7 @@ A simple nanoleaf plugin for midi-mixer. Allows changing the brightness/hue/satu
 - Pressing "Assign" will change the slider to hue
 - Pressing "Run" will change the slider to saturation
 - Pressing mute will turn the lights on or off
+
+
+
+Latest releases of this plugin available [on the project's github page](https://github.com/Jaggernaut555/midi-mixer-nanoleaf/releases/latest)

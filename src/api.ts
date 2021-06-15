@@ -42,7 +42,14 @@ export class NanoleafApi {
             this.settings.port = 16021;
         }
     
-        await this.initNanoLeaf();
+        // Temp way of setting two panels
+        if (this.settings.ip) {
+            await this.initNanoLeaf(1, this.settings.ip, this.settings.apikey, this.settings.port);
+        }
+        if (this.settings.ip) {
+            await this.initNanoLeaf(2, this.settings.ip2, this.settings.apikey2, this.settings.port2);
+        }
+
         for(var id in this.assignments.groups) {
             await this.update(this.assignments.groups[id]);
         }
@@ -58,30 +65,30 @@ export class NanoleafApi {
         }
     }
 
-    private async initNanoLeaf() {
+    private async initNanoLeaf(count:number, ip: string, apikey: string, port: string) {
         // TODO: Allow setting up more than one group
         let nanoleaf = new Nanoleaf({
-          ipAddress: this.settings.ip,
-          authToken: this.settings.apikey,
+          ipAddress: ip,
+          authToken: apikey,
           apiVersion: "/api/v1/",
-          port: this.settings.port
+          port: port
         });
       
         try {
           let isOn = await nanoleaf.state.isTurnedOn();
           $MM.setSettingsStatus("status", "Connected");
       
-          this.assignments.groups[this.settings.ip] = {
+          this.assignments.groups[ip] = {
               nanoleaf: nanoleaf,
-              assignment: new Assignment("Nanoleaf-1",{
-                  name: "Nanoleaf-group"
+              assignment: new Assignment(`Nanoleaf-${count}`,{
+                  name: `Nanoleaf-group ${count}`
               }),
               activeSelection: Selection.brightness,
               brightnessLevel: 0,
               hueLevel: 0,
               saturationLevel: 0
           }
-          this.initGroup(this.assignments.groups[this.settings.ip]);
+          this.initGroup(this.assignments.groups[ip]);
         } catch (err) {
           console.log(err);
           $MM.setSettingsStatus("status", "Could not connect");

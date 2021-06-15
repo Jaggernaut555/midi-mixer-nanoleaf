@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/midi-mixer-plugin/plugin.schema.json",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "id": "ca.jaggernaut.midi-mixer.nanoleaf",
   "name": "Nanoleaf",
   "type": "node",
@@ -25,6 +25,23 @@
     },
     "apikey":{
       "label": "API Key",
+      "required": true,
+      "type": "password",
+      "fallback": "No API Key"
+    },
+    "ip2":{
+      "label": "IP Address 2",
+      "required": true,
+      "type": "text",
+      "fallback": "ip address"
+    },
+    "port2":{
+      "label": "Port 2",
+      "type": "text",
+      "fallback": "16021"
+    },
+    "apikey2":{
+      "label": "API Key 2",
       "required": true,
       "type": "password",
       "fallback": "No API Key"
