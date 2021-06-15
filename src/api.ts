@@ -50,7 +50,7 @@ export class NanoleafApi {
         if (this.settings.ip) {
             await this.initNanoLeaf(1, this.settings.ip, this.settings.apikey, this.settings.port);
         }
-        if (this.settings.ip) {
+        if (this.settings.ip2) {
             await this.initNanoLeaf(2, this.settings.ip2, this.settings.apikey2, this.settings.port2);
         }
 
