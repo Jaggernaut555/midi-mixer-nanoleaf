@@ -80,12 +80,17 @@ export class NanoleafApi {
       
         try {
           let isOn = await nanoleaf.state.isTurnedOn();
-          $MM.setSettingsStatus("status", "Connected");
+          if (count == 1) {
+              $MM.setSettingsStatus("status", "Connected");
+          }
+          else {
+              $MM.setSettingsStatus("status2", "Connected");
+          }
       
           this.assignments.groups[ip] = {
               nanoleaf: nanoleaf,
               assignment: new Assignment(`Nanoleaf-${count}`,{
-                  name: `Nanoleaf-group ${count}`
+                  name: `Nanoleaf Panel ${ip}`
               }),
               activeSelection: Selection.brightness,
               brightnessLevel: 0,
@@ -95,7 +100,12 @@ export class NanoleafApi {
           this.initGroup(this.assignments.groups[ip]);
         } catch (err) {
           console.log(err);
-          $MM.setSettingsStatus("status", "Could not connect");
+          if (count == 1) {
+              $MM.setSettingsStatus("status", "Could not connect");
+          }
+          else {
+            $MM.setSettingsStatus("status2", "Could not connect");
+          }
         }
       }
     
@@ -133,8 +143,8 @@ export class NanoleafApi {
             }
         })
         a.assignment.on("mutePressed", async () => {
-            let val = await a.nanoleaf.state.toggleOnOffState();
-            a.assignment.muted = val;
+            let val = a.assignment.muted = !a.assignment.muted;
+            await a.nanoleaf.state.modifyOnOffState(!val)
             this.update(a);
         });
         a.assignment.on("assignPressed", () => {

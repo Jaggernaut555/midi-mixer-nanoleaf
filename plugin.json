@@ -8,7 +8,7 @@
   "icon": "icon.png",
   "settings": {
     "status": {
-      "label": "Connection Status",
+      "label": "Panel 1 Connection Status",
       "type": "status",
       "fallback": "Not connected"
     },
@@ -28,6 +28,11 @@
       "required": true,
       "type": "password",
       "fallback": "No API Key"
+    },
+    "status2": {
+      "label": "Panel 2 Connection Status",
+      "type": "status",
+      "fallback": "Not connected"
     },
     "ip2":{
       "label": "IP Address 2",
