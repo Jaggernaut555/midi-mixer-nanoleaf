@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/midi-mixer-plugin/plugin.schema.json",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "id": "ca.jaggernaut.midi-mixer.nanoleaf",
   "name": "Nanoleaf",
   "type": "node",
@@ -57,7 +57,7 @@
       "type":"button"
     },
     "iprequest": {
-      "label":"IP to request apikey",
+      "label":"IP to request apikey. Enable pairing mode on the device before pressing request.",
       "type":"text",
       "fallback": "ip address"
     },

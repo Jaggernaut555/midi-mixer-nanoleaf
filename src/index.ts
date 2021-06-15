@@ -17,6 +17,18 @@ const identifyConnection = async () => {
 const request = async () => {
     console.log("Requesting auth_token");
     let settings = await $MM.getSettings();
+    let ip:string = ""
+
+    if (!settings.iprequest) {
+        $MM.setSettingsStatus("tokenstatus", "No ip specified");
+    }
+    else {
+        ip = settings.iprequest as string;
+    }
+
+    if (!ip.includes(":")) {
+        ip = `${ip}:16021`
+    }
 
     try {
         let response = await fetch(`http://${settings.iprequest}/api/v1/new`, {
