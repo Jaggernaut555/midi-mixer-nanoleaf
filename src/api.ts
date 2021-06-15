@@ -21,6 +21,10 @@ interface AssignmentData {
     syncinterval?: NodeJS.Timeout
 }
 
+interface tokenRequest {
+    auth_token: string
+}
+
 export class NanoleafApi {
     private assignments: Assignments = {
         groups: {}
