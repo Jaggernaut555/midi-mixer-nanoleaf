@@ -1,0 +1,44 @@
+{
+  "$schema": "./node_modules/midi-mixer-plugin/plugin.schema.json",
+  "version": "0.0.1",
+  "id": "ca.jaggernaut.midi-mixer.nanoleaf",
+  "name": "Nanoleaf",
+  "type": "node",
+  "main": "lib/index.js",
+  "icon": "icon.png",
+  "settings": {
+    "status": {
+      "label": "Voicemeeter Status",
+      "type": "status",
+      "fallback": "Not connected"
+    },
+    "ip":{
+      "label": "IP Address",
+      "required": true,
+      "type": "text",
+      "fallback": "ip address"
+    },
+    "port":{
+      "label": "Port",
+      "type": "text",
+      "fallback": "16021"
+    },
+    "apikey":{
+      "label": "API Key",
+      "required": true,
+      "type": "password",
+      "fallback": "No API Key"
+    },
+    "syncinterval":{
+      "label": "Sync interval (seconds)",
+      "required": false,
+      "type": "text",
+      "fallback": "15"
+    },
+    "identify": {
+      "label":"Identify",
+      "type":"button"
+    }
+  },
+  "author": "Jaggernaut"
+}
