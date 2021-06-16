@@ -10,3 +10,5 @@ To install without compiling from source, download the [.midiMixerPlugin from th
 This package uses:
 - [midi-mixer-plugin](https://github.com/midi-mixer/midi-mixer-plugin)
 - [nanoleaf-ts](https://github.com/jakewheeler/nanoleaf-ts)
+- [node-fetch](https://github.com/node-fetch/node-fetch)
+- [node-ssdp](https://github.com/diversario/node-ssdp)
