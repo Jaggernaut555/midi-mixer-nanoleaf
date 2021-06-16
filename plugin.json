@@ -70,6 +70,15 @@
       "label": "Requested API key",
       "type": "status",
       "fallback": "no key"
+    },
+    "ipsearchstatus": {
+      "label": "Discovered nanoleaf panels",
+      "type": "status",
+      "fallback": "Not searched"
+    },
+    "ipsearchbutton": {
+      "label": "Search network for panels",
+      "type": "button"
     }
   },
   "author": "Jaggernaut"

@@ -35,12 +35,14 @@
   "dependencies": {
     "midi-mixer-plugin": "^0.3.0",
     "nanoleaf-ts": "^1.0.7",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "node-ssdp": "^4.0.1"
   },
   "bundledDependencies": [
     "midi-mixer-plugin",
     "nanoleaf-ts",
-    "node-fetch"
+    "node-fetch",
+    "node-ssdp"
   ],
   "repository": {
     "type": "git",

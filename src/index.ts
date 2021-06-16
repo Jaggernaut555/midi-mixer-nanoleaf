@@ -7,6 +7,9 @@ import fetch from "node-fetch";
 
 // There's also "Effects" and "Rhythm" in the nanoleaf api, whatever those do.
 
+var Client = require('node-ssdp').Client
+, client = new Client();
+
 const nm = new NanoleafApi();
 
 const request = async () => {
@@ -43,6 +46,35 @@ const request = async () => {
     }
 }
 
-$MM.onSettingsButtonPress("tokenrequest", request)
+interface rInfo {
+    address: string
+    family: string
+    port: number
+    size: number
+}
+
+let discoveredIPs: string[]
+
+client.on('response', (headers:any, statusCode:number, rinfo:rInfo) => {
+    if (statusCode == 200) {
+        console.log("got a response to an m-search.");
+        if (!discoveredIPs.includes(rinfo.address)) {
+            discoveredIPs.push(rinfo.address);
+            $MM.setSettingsStatus("ipsearchstatus", discoveredIPs.toString());
+        }
+    }
+});
+
+const discovery = async () => {
+    console.log("searching");
+    // reset list
+    discoveredIPs = [];
+    client.search('nanoleaf:nl29');
+    client.search('Nanoleaf_aurora:light');
+
+}
+
+$MM.onSettingsButtonPress("ipsearchbutton", discovery);
+$MM.onSettingsButtonPress("tokenrequest", request);
 
 nm.init();
