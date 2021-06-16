@@ -9,11 +9,6 @@ import fetch from "node-fetch";
 
 const nm = new NanoleafApi();
 
-const identifyConnection = async () => {
-    console.log("identifying");
-    nm.identify();
-}
-
 const request = async () => {
     console.log("Requesting auth_token");
     let settings = await $MM.getSettings();
@@ -48,7 +43,6 @@ const request = async () => {
     }
 }
 
-$MM.onSettingsButtonPress("identify", identifyConnection);
 $MM.onSettingsButtonPress("tokenrequest", request)
 
 nm.init();

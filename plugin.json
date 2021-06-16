@@ -57,10 +57,6 @@
       "type": "text",
       "fallback": "15"
     },
-    "identify": {
-      "label":"Identify",
-      "type":"button"
-    },
     "iprequest": {
       "label":"IP to request apikey. Enable pairing mode on the device before pressing request.",
       "type":"text",

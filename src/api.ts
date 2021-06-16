@@ -15,10 +15,8 @@ interface AssignmentData {
     nanoleaf: Nanoleaf
     assignment: Assignment
     activeSelection: Selection
-    brightnessLevel: number
-    hueLevel: number
-    saturationLevel: number
     syncinterval?: NodeJS.Timeout
+    identifyButton: ButtonType
 }
 
 interface tokenRequest {
@@ -59,10 +57,9 @@ export class NanoleafApi {
         }
     }
 
-    public async identify() {
-        // TODO: identify each group. Perhaps set a midi-mixer button for this instead of the current settings page button
+    public async identify(a:AssignmentData) {
         try {
-            await this.assignments.groups[this.settings.ip].nanoleaf.panels.identify();
+            await a.nanoleaf.panels.identify();
         } catch (error) {
             console.log(error);
             $MM.setSettingsStatus("status", "Error identifying panels");
@@ -93,11 +90,15 @@ export class NanoleafApi {
                   name: `Nanoleaf Panel ${ip}`
               }),
               activeSelection: Selection.brightness,
-              brightnessLevel: 0,
-              hueLevel: 0,
-              saturationLevel: 0
+              identifyButton: new ButtonType(`IdenntifyButton-${count}`,{
+                  name: `Identify panel ${ip}`,
+                  active: true
+              })
           }
           this.initGroup(this.assignments.groups[ip]);
+          this.assignments.groups[ip].identifyButton.on("pressed", () => {
+              this.identify(this.assignments.groups[ip]);
+          })
         } catch (err) {
           console.log(err);
           if (count == 1) {
@@ -112,14 +113,12 @@ export class NanoleafApi {
     private updateSelection(a: AssignmentData) {
         if (!a.assignment.assigned && !a.assignment.running) {
             a.activeSelection = Selection.brightness;
-            a.assignment.volume = a.brightnessLevel;
         } else if (a.assignment.assigned && !a.assignment.running) {
             a.activeSelection = Selection.hue;
-            a.assignment.volume = a.hueLevel;
         } else if (!a.assignment.assigned && a.assignment.running) {
             a.activeSelection = Selection.saturation;
-            a.assignment.volume = a.saturationLevel;
         }
+        this.updateVolume(a);
     }
 
     private initGroup(a: AssignmentData) {
@@ -127,15 +126,15 @@ export class NanoleafApi {
             a.assignment.volume = level;
             switch (a.activeSelection) {
                 case Selection.brightness:
-                    a.brightnessLevel = level;
+                    a.assignment.volume = level;
                     await a.nanoleaf.state.setBrightness(level*100);
                     break;
                 case Selection.hue:
-                    a.hueLevel = level;
+                    a.assignment.volume = level;
                     await a.nanoleaf.state.setHue(level*360);
                     break;
                 case Selection.saturation:
-                    a.saturationLevel = level
+                    a.assignment.volume = level
                     await a.nanoleaf.state.setSaturation(level*100)
                     break;
                 default:
@@ -177,29 +176,29 @@ export class NanoleafApi {
     }
     private async updateBrightness(a:AssignmentData) {
         let val = await a.nanoleaf.state.getBrightness();
-        a.brightnessLevel = val.value/100
+        a.assignment.volume = val.value/100
     }
     
     private async updateHue(a:AssignmentData) {
         let val = await a.nanoleaf.state.getHue();
-        a.hueLevel = val.value/360
+        a.assignment.volume = val.value/360
     }
     
     private async updateSaturation(a:AssignmentData) {
         let val = await a.nanoleaf.state.getSaturation();
-        a.saturationLevel = val.value/100
+        a.assignment.volume = val.value/100
     }
     
-    private updateVolume(a:AssignmentData) {
+    private async updateVolume(a:AssignmentData) {
         switch (a.activeSelection) {
             case Selection.brightness:
-                a.assignment.volume = a.brightnessLevel;
+                this.updateBrightness(a);
                 break;
             case Selection.hue:
-                a.assignment.volume = a.hueLevel;
+                this.updateHue(a);
                 break;
             case Selection.saturation:
-                a.assignment.volume = a.saturationLevel;
+                this.updateSaturation(a);
                 break;
         }
     }
@@ -207,9 +206,6 @@ export class NanoleafApi {
     private async update(a:AssignmentData) {
         let isOn = await a.nanoleaf.state.isTurnedOn();
         a.assignment.muted = isOn;
-        await this.updateBrightness(a);
-        await this.updateHue(a);
-        await this.updateSaturation(a);
-        this.updateVolume(a);
+        await this.updateVolume(a);
     }
 }
