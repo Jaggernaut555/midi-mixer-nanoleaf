@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/midi-mixer-plugin/plugin.schema.json",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "id": "ca.jaggernaut.midi-mixer.nanoleaf",
   "name": "Nanoleaf",
   "type": "node",
@@ -12,18 +12,18 @@
       "type": "status",
       "fallback": "Not connected"
     },
-    "ip":{
+    "ip": {
       "label": "IP Address",
       "required": true,
       "type": "text",
       "fallback": "ip address"
     },
-    "port":{
+    "port": {
       "label": "Port",
       "type": "text",
       "fallback": "16021"
     },
-    "apikey":{
+    "apikey": {
       "label": "API Key",
       "required": true,
       "type": "password",
@@ -34,32 +34,32 @@
       "type": "status",
       "fallback": "Not connected"
     },
-    "ip2":{
+    "ip2": {
       "label": "IP Address 2",
       "required": true,
       "type": "text",
       "fallback": "ip address"
     },
-    "port2":{
+    "port2": {
       "label": "Port 2",
       "type": "text",
       "fallback": "16021"
     },
-    "apikey2":{
+    "apikey2": {
       "label": "API Key 2",
       "required": true,
       "type": "password",
       "fallback": "No API Key"
     },
-    "syncinterval":{
+    "syncinterval": {
       "label": "Sync interval (seconds)",
       "required": false,
       "type": "text",
       "fallback": "15"
     },
     "iprequest": {
-      "label":"IP to request apikey. Enable pairing mode on the device before pressing request.",
-      "type":"text",
+      "label": "IP to request apikey. Enable pairing mode on the device before pressing request.",
+      "type": "text",
       "fallback": "ip address"
     },
     "tokenrequest": {
